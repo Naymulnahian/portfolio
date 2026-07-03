@@ -9,7 +9,6 @@ import {
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { SKILLS } from "@/lib/data";
-import { SkillBar } from "@/components/ui/skill-bar";
 
 const ICONS: Record<string, React.ElementType> = {
   Code2,
@@ -22,7 +21,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function Skills() {
   return (
-    <section id="skills" className="section bg-surface/20">
+    <section id="skills" className="section">
       <div className="section-inner">
         <SectionHeading
           eyebrow="Skills"
@@ -30,22 +29,27 @@ export function Skills() {
           lede="A working toolkit across software engineering and applied machine learning — deepened through coursework, projects, and independent study."
         />
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid divide-y divide-surface-border border-t border-surface-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 sm:border-l lg:grid-cols-3">
           {SKILLS.map((group, i) => {
             const Icon = ICONS[group.icon];
             return (
-              <Reveal key={group.category} delay={(i % 3) * 0.08}>
-                <div className="card card-hover h-full p-6">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border bg-white/[0.03] text-accent-soft">
-                      {Icon && <Icon className="h-4.5 w-4.5" />}
-                    </div>
-                    <h3 className="font-display text-base text-foreground">{group.category}</h3>
+              <Reveal key={group.category} delay={(i % 3) * 0.06}>
+                <div className="h-full px-6 py-8 sm:px-8">
+                  <div className="flex items-center gap-2 text-muted">
+                    {Icon && <Icon className="h-4 w-4" />}
+                    <h3 className="font-mono text-xs uppercase tracking-[0.2em]">
+                      {group.category}
+                    </h3>
                   </div>
 
-                  <div className="mt-6 space-y-4">
+                  <div className="mt-5 flex flex-wrap gap-2">
                     {group.skills.map((skill) => (
-                      <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                      <span
+                        key={skill.name}
+                        className="rounded-full border border-surface-border px-3 py-1.5 text-sm text-foreground/80 transition-colors hover:border-white/20 hover:text-foreground"
+                      >
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </div>
