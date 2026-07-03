@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Sparkles } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PROJECTS } from "@/lib/data";
 
@@ -15,57 +15,77 @@ export function Projects() {
           lede="A mix of applied machine learning systems and full-stack software, built to be shipped — not just prototyped."
         />
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 border-t border-surface-border">
           {PROJECTS.map((project, i) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -6 }}
-              className="card group overflow-hidden"
+              transition={{
+                duration: 0.5,
+                delay: (i % 4) * 0.05,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group grid gap-4 border-b border-surface-border py-8 sm:grid-cols-[3rem_1fr_auto] sm:items-start sm:gap-8 sm:py-10"
             >
-              <div className="relative flex h-44 items-center justify-center overflow-hidden border-b border-surface-border bg-gradient-to-br from-surface to-[#0A0F17]">
-                <div className="grid-overlay opacity-60" />
-                {project.featured && (
-                  <span className="badge absolute right-4 top-4 z-10 text-accent-soft">
-                    <Sparkles className="h-3 w-3" /> Featured
-                  </span>
-                )}
-                <span className="relative font-display text-sm text-muted/70">
-                  Project preview
-                </span>
-              </div>
+              <span className="font-mono text-sm text-muted/50">
+                {String(i + 1).padStart(2, "0")}
+              </span>
 
-              <div className="p-6">
-                <h3 className="font-display text-lg text-foreground">{project.title}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted">
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="font-display text-xl text-foreground sm:text-2xl">
+                    {project.title}
+                  </h3>
+
+                  {project.featured && (
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-soft">
+                      Featured
+                    </span>
+                  )}
+                </div>
+
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-[15px]">
                   {project.description}
                 </p>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="badge">
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-xs text-muted/70">
+                  {project.tags.map((tag, idx) => (
+                    <span key={tag}>
                       {tag}
+                      {idx < project.tags.length - 1 && (
+                        <span className="ml-4 text-muted/30">/</span>
+                      )}
                     </span>
                   ))}
                 </div>
+              </div>
 
-                <div className="mt-6 flex items-center gap-3">
-                  {project.github && (
-                    <a href={project.github} className="btn-secondary flex-1 text-xs">
-                      <Github className="h-3.5 w-3.5" />
-                      GitHub
-                    </a>
-                  )}
-                  {project.demo && (
-                    <a href={project.demo} className="btn-primary flex-1 text-xs">
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      Live demo
-                    </a>
-                  )}
-                </div>
+              <div className="flex gap-2 sm:flex-col sm:items-end sm:gap-3">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
+                  >
+                    <Github className="h-4 w-4" />
+                    <span className="hidden sm:inline">Code</span>
+                  </a>
+                )}
+
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm text-foreground/80 transition-colors group-hover:text-accent-soft"
+                  >
+                    <span className="hidden sm:inline">Live demo</span>
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
